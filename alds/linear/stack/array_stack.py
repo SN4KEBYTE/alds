@@ -10,7 +10,7 @@ class ArrayStack(BaseStack):
         self.__data: List[Any] = []
 
     def push(self, elem: Any) -> None:
-        if self.__max_size == ANY_SIZE:
+        if self._max_size == ANY_SIZE or len(self.__data) < self._max_size:
             self.__data.append(elem)
         else:
             raise StackError('stack is full, unable to push')
@@ -32,3 +32,6 @@ class ArrayStack(BaseStack):
 
     def is_empty(self) -> bool:
         return len(self.__data) == 0
+
+    def is_full(self) -> bool:
+        return len(self.__data) == self._max_size

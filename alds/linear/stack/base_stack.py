@@ -6,7 +6,7 @@ ANY_SIZE: int = -1
 
 class BaseStack(ABC):
     def __init__(self, max_size: int = ANY_SIZE):
-        self.__max_size: int = max_size
+        self._max_size: int = max_size
 
     @abstractmethod
     def push(self, elem) -> None:
