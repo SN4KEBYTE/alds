@@ -3,7 +3,7 @@ def selection_sort(iterable):
         min_ind: int = i
 
         for j in range(i + 1, len(iterable)):
-            if iterable[j] < iterable[i]:
+            if iterable[j] < iterable[min_ind]:
                 min_ind = j
 
         if min_ind != i:
