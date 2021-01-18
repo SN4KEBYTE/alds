@@ -18,7 +18,7 @@ class ArrayStack(BaseStack):
     def pop(self) -> Any:
         try:
             elem: Any = self.peek()
-            self.__data.pop(-1)
+            self.__data.pop()
 
             return elem
         except IndexError:
@@ -35,3 +35,9 @@ class ArrayStack(BaseStack):
 
     def is_full(self) -> bool:
         return len(self.__data) == self._max_size
+
+    def __len__(self):
+        return len(self.__data)
+
+    def __repr__(self) -> str:
+        return f'ArrayStack([{", ".join([str(elem) for elem in self.__data])}])'
