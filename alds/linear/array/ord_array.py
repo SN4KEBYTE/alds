@@ -1,7 +1,7 @@
 import numbers
 import reprlib
 from bisect import bisect, insort
-from typing import Any, List, Union, Sequence, Iterable, Optional, Iterator
+from typing import Any, List, Union, Iterable, Optional, Iterator
 
 
 class OrdArray:
@@ -36,10 +36,8 @@ class OrdArray:
     def __iter__(self) -> Iterator[Any]:
         return iter(self.__data)
 
-    def __reversed__(self) -> 'OrdArray':
-        cls = type(self)
-
-        return cls(self.__data[::-1])
+    def __reversed__(self) -> List[Any]:
+        return self.__data[::-1]
 
     def __getitem__(self, key: Union[numbers.Integral, slice]) -> Union[Any, 'OrdArray']:
         cls = type(self)
@@ -54,11 +52,13 @@ class OrdArray:
         else:
             raise TypeError(f'unsupported key type: {type(key)}, expected numbers.Integral or slice instead')
 
-    def __delitem__(self, key: int) -> None:
+    def __delitem__(self, key: Union[numbers.Integral, slice]) -> None:
         try:
             del self.__data[key]
-        except IndexError as err:
-            raise IndexError from err
+        except IndexError as i_err:
+            raise IndexError from i_err
+        except TypeError as t_err:
+            raise TypeError from t_err
 
     def __eq__(self, other) -> bool:
         return len(self.__data) == len(other) and all(a == b for a, b in zip(self.__data, other))
