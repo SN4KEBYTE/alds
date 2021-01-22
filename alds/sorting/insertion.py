@@ -1,7 +1,11 @@
-def insertion_sort(iterable):
+from collections.abc import MutableSequence
+from typing import Any
+
+
+def insertion_sort(iterable: MutableSequence) -> None:
     for i in range(1, len(iterable)):
-        tmp = iterable[i]
-        j = i
+        tmp: Any = iterable[i]
+        j: int = i
 
         while j > 0 and iterable[j - 1] > tmp:
             iterable[j] = iterable[j - 1]

@@ -1,4 +1,7 @@
-def selection_sort(iterable):
+from collections.abc import MutableSequence
+
+
+def selection_sort(iterable: MutableSequence) -> None:
     for i in range(len(iterable) - 1):
         min_ind: int = i
 
