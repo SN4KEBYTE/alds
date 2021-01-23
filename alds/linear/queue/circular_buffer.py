@@ -1,13 +1,13 @@
-from typing import Any, List
+from typing import Any, List, Optional
 
-from alds.linear.queue.base_queue import BaseQueue
 from alds.linear.queue._exceptions import QueueError
+from alds.linear.queue.base_queue import BaseQueue
 
 
 class CircularBuffer(BaseQueue):
     def __init__(self, max_size: int):
         super().__init__(max_size + 1)
-        self.__data: List[Any] = [None] * max_size
+        self.__data: List[Any] = [None for _ in range(self._max_size)]
         self.__front: int = 0
         self.__rear: int = -1
 
@@ -21,7 +21,7 @@ class CircularBuffer(BaseQueue):
         self.__rear += 1
         self.__data[self.__rear] = elem
 
-    def pop(self) -> Any:
+    def pop(self) -> Optional[Any]:
         if self.is_empty():
             raise QueueError('circular buffer is empty, unable to pop')
 
@@ -33,7 +33,7 @@ class CircularBuffer(BaseQueue):
 
         return tmp
 
-    def peek(self) -> Any:
+    def peek(self) -> Optional[Any]:
         if self.is_empty():
             raise QueueError('circular buffer is empty, unable to peek')
 
@@ -44,3 +44,7 @@ class CircularBuffer(BaseQueue):
 
     def is_full(self) -> bool:
         return self.__rear + 2 == self.__front or self.__front + self._max_size - 2 == self.__rear
+
+    def __len__(self) -> int:
+        return self.__rear - self.__front + 1 if self.__rear >= self.__front \
+            else self._max_size - self.__front + self.__rear + 1
